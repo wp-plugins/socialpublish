@@ -6,14 +6,14 @@
 
 /*
 Plugin Name: Socialpublish
-Plugin URI: http://socialpublish.io:8080/plugins/wordpress
+Plugin URI: http://socialpublish.io/plugins/wordpress
 Description: SocialPublish is an easy to use service that automatically shares your blog post on Facebook and Twitter at the moment you publish it!
 Version: 0.0.1
 Author: Socialpublish.io <Jorgen Horstink>
-Author URI: http://socialpublish.io:8080
+Author URI: http://socialpublish.io
 */
 
-define('SOCIALPUBLISH_URI', 'http://socialpublish.io:8080');
+define('SOCIALPUBLISH_URI', 'http://socialpublish.io');
 
 define('__SOCIALPUBLISH_FILE__', __FILE__);
 define('__SOCIALPUBLISH_ROOT__', __DIR__);
