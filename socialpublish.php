@@ -16,7 +16,7 @@ Author URI: http://socialpublish.io
 define('SOCIALPUBLISH_URI', 'http://socialpublish.io');
 
 define('__SOCIALPUBLISH_FILE__', __FILE__);
-define('__SOCIALPUBLISH_ROOT__', __DIR__);
+define('__SOCIALPUBLISH_ROOT__', dirname(__FILE__));
 
 require_once __SOCIALPUBLISH_ROOT__ . '/service/SocialpublishService.php';
 
