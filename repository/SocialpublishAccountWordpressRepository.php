@@ -11,11 +11,11 @@ class SocialpublishAccountWordpressRepository implements ISocialpublishAccountRe
     protected function __construct() {}
 
     public function getInstance() {
-        if (static::$instance === null) {
-            static::$instance = new SocialpublishAccountWordpressRepository();
+        if (self::$instance === null) {
+            self::$instance = new SocialpublishAccountWordpressRepository();
         }
 
-        return static::$instance;
+        return self::$instance;
     }
 
     public function hasAccount() {

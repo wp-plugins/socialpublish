@@ -9,11 +9,11 @@ class SocialpublishBootstrap
     protected $service;
 
     public static function loadPlugin(SocialpublishService $service) {
-        if (static::$instance === null) {
-            static::$instance = new SocialpublishBootstrap($service);
+        if (self::$instance === null) {
+            self::$instance = new SocialpublishBootstrap($service);
         }
 
-        return static::$instance;
+        return self::$instance;
     }
 
     protected function __construct(SocialpublishService $service) {

@@ -19,17 +19,17 @@ class SocialpublishService
     protected function __construct() {}
 
     public function getInstance() {
-        if (static::$instance === null) {
-            static::$instance = new SocialpublishService();
+        if (self::$instance === null) {
+            self::$instance = new SocialpublishService();
         }
 
-        return static::$instance;
+        return self::$instance;
     }
 
     // can be used to Stub the base API URI, needed in development mode
     // when Socialpublish is listening on port 8080.
     public static function setBaseUri($uri) {
-        static::$URI = $uri;
+        self::$URI = $uri;
     }
 
     /*
@@ -37,7 +37,7 @@ class SocialpublishService
      *        by the service
      */
     public static function setAccountRepository(ISocialpublishAccountRepository $accountRepository) {
-        static::$accountRepository = $accountRepository;
+        self::$accountRepository = $accountRepository;
     }
 
     /*
@@ -45,7 +45,7 @@ class SocialpublishService
      *        by the service
      */
     public static function setPostRepository(ISocialpublishPostRepository $postRepository) {
-        static::$postRepository = $postRepository;
+        self::$postRepository = $postRepository;
     }
 
     public function validate($accessToken) {
@@ -60,7 +60,7 @@ class SocialpublishService
             throw new SocialpublishInvalidAccessTokenException();
         }
 
-        $account = static::$accountRepository->getAccount($accessToken);
+        $account = self::$accountRepository->getAccount($accessToken);
 
         $hubs = array();
         foreach ($result['hubs'] as $row) {
@@ -69,15 +69,15 @@ class SocialpublishService
 
         $account->setHubs($hubs);
 
-        static::$accountRepository->save($account);
+        self::$accountRepository->save($account);
 
         return $account;
     }
 
     public function publish($postId) {
-        if (static::$accountRepository->hasAccount()) {
+        if (self::$accountRepository->hasAccount()) {
 
-            $post = static::$postRepository->getPostById($postId);
+            $post = self::$postRepository->getPostById($postId);
 
             // Don't distribute this post to Socialpublish if it has been published already...
             if ($post->isPublished()) {
@@ -86,7 +86,7 @@ class SocialpublishService
 
             $post->publish();
             // Store the post is published...
-            static::$postRepository->save($post);
+            self::$postRepository->save($post);
 
             $hubs = array();
 
@@ -97,7 +97,7 @@ class SocialpublishService
             $ret = $this->api(
             	'/publish',
             	'POST',
-                static::$accountRepository->getAccount()->getAccessToken(),
+                self::$accountRepository->getAccount()->getAccessToken(),
                 $a = array(
             		'title' => $post->getTitle(),
                     'message' => $post->getMessage(),
@@ -115,23 +115,23 @@ class SocialpublishService
     }
 
     public function getPostById($postId) {
-        return static::$postRepository->getPostById($postId);
+        return self::$postRepository->getPostById($postId);
     }
 
     public function hasAccount() {
-        return static::$accountRepository->hasAccount();
+        return self::$accountRepository->hasAccount();
     }
 
     public function getAccount() {
-        return static::$accountRepository->getAccount();
+        return self::$accountRepository->getAccount();
     }
 
     public function deleteAccount() {
-        static::$accountRepository->deleteAccount();
+        self::$accountRepository->deleteAccount();
     }
 
     public function savePost(SocialpublishPost $post) {
-        static::$postRepository->save($post);
+        self::$postRepository->save($post);
     }
 
     protected function api($query, $method, $accessToken, $body = null) {
@@ -159,7 +159,7 @@ class SocialpublishService
         }
 
         $context = stream_context_create($cparams);
-        $fp = @fopen(static::$URI . $query, 'rb', false, $context);
+        $fp = @fopen(self::$URI . $query, 'rb', false, $context);
         if (!$fp) {
             $res = false;
         } else {
