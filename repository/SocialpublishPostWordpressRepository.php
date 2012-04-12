@@ -12,11 +12,11 @@ class SocialpublishPostWordpressRepository implements ISocialpublishPostReposito
     protected function __construct() {}
 
     public function getInstance() {
-        if (static::$instance === null) {
-            static::$instance = new SocialpublishPostWordpressRepository();
+        if (self::$instance === null) {
+            self::$instance = new SocialpublishPostWordpressRepository();
         }
 
-        return static::$instance;
+        return self::$instance;
     }
 
     /*
@@ -24,7 +24,7 @@ class SocialpublishPostWordpressRepository implements ISocialpublishPostReposito
      *        by the service
      */
     public static function setAccountRepository(ISocialpublishAccountRepository $accountRepository) {
-        static::$accountRepository = $accountRepository;
+        self::$accountRepository = $accountRepository;
     }
 
 
@@ -32,7 +32,7 @@ class SocialpublishPostWordpressRepository implements ISocialpublishPostReposito
         $post = get_post($postId);
         $ret = new SocialpublishPost($postId, $post->post_title, get_permalink($postId));
         $ret->setLinkDescription(substr(strip_tags($post->post_content), 0, 160));
-        $ret->setHubs(static::$accountRepository->getAccount()->getHubs());
+        $ret->setHubs(self::$accountRepository->getAccount()->getHubs());
 
         $meta = get_post_meta($postId, 'socialpublish', true);
         if ($meta !== false && $meta !== '') {
