@@ -41,12 +41,12 @@ That's all! You're ready to go now! If the `access_token` is valid, you'll see a
 
 == Screenshots ==
 
-1. When you write a Blog Post and have the SocialPublish Screen Option panel enabled, you're able to provide optional hashtags and a message text you want to provide within your shared Twitter and/or Facebook post. You can also decide to which social media accounts you want to share your Blog Post.
-2. Go to <http://socialpublish.io> and Sign Up for Free!
-3. Connect your social media accounts with a few simple clicks
-4. That's it, your SocialPublish account is now ready!
-5. On the SocialPublish Settings page, enter your SocialPublish `access_token`. You can find your access_token on your Dashboard on the SocialPublish website.
-6. If the `access_token` is valid, you'll see an overview of the social media accounts you have connected to your SocialPublish account earlier.
+1. Screenshot 1 - When you write a Blog Post and have the SocialPublish Screen Option panel enabled, you're able to provide optional hashtags and a message text you want to provide within your shared Twitter and/or Facebook post. You can also decide to which social media accounts you want to share your Blog Post.
+2. Screenshot 2 - Go to <http://socialpublish.io> and Sign Up for Free!
+3. Screenshot 3 - Connect your social media accounts with a few simple clicks
+4. Screenshot 4 - That's it, your SocialPublish account is now ready!
+5. Screenshot 5 - On the SocialPublish Settings page, enter your SocialPublish `access_token`. You can find your access_token on your Dashboard on the SocialPublish website.
+6. Screenshot 6 - If the `access_token` is valid, you'll see an overview of the social media accounts you have connected to your SocialPublish account earlier.
 
 == Changelog ==
 
