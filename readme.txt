@@ -37,7 +37,7 @@ That's all! You're ready to go now! If the `access_token` is valid, you'll see a
 
 1. Create a new WordPress Post
 2. On the editing screen, click on the right top on Screen Options, and enable the SocialPublish panel
-3. You're able now to decide to which social media accounts you want to share the Blog Post (see: screenshot 1). Optional you can provide a custom message (otherwise the Blog Title will be used), and hashtags for Twitter.
+3. You're able now to decide to which social media accounts you want to share the Blog Post (see: [screenshot 1](http://wordpress.org/extend/plugins/socialpublish/screenshots/)). Optional you can provide a custom message (otherwise the Blog Title will be used), and hashtags for Twitter.
 
 == Screenshots ==
 
