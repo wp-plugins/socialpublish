@@ -169,7 +169,7 @@ class SocialpublishBootstrap
 
                     $template->setAttribute('success_message', $message);
                 } catch (SocialpublishInvalidAccessTokenException $exception) {
-                    $template->setAttribute('error_message', __('The <code>access_token</code> you provided seems to be invalid.'));
+                    $template->setAttribute('error_message', __('The <code>access_token</code> you provided seems to be invalid. The SocialPublish plugin needs at least PHP5.2 to run. If this does not cause the issue, please leave a feedback message on your SocialPublish dashboard (website: socialpublish.io)'));
                 }
             }
         }
