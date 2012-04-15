@@ -3,6 +3,8 @@
 require_once __SOCIALPUBLISH_ROOT__ . '/domain/SocialpublishInvalidAccessTokenException.php';
 require_once __SOCIALPUBLISH_ROOT__ . '/domain/SocialpublishAccountHub.php';
 
+require_once __SOCIALPUBLISH_ROOT__ . '/domain/SocialpublishPHPVersionException.php';
+
 // This service layer mediates between the MVC layer and the Data Store layer (Repositories)
 
 class SocialpublishService
@@ -141,6 +143,10 @@ class SocialpublishService
                 'ignore_errors' => true
             )
         );
+
+        if (!function_exists('json_encode')) {
+            throw new SocialpublishPHPVersionException();
+        }
 
         $params = array(
             "access_token" => $accessToken

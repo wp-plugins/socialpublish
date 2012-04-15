@@ -169,7 +169,9 @@ class SocialpublishBootstrap
 
                     $template->setAttribute('success_message', $message);
                 } catch (SocialpublishInvalidAccessTokenException $exception) {
-                    $template->setAttribute('error_message', __('The <code>access_token</code> you provided seems to be invalid. The SocialPublish plugin needs at least PHP5.2 to run. If this does not cause the issue, please leave a feedback message on your SocialPublish dashboard (website: socialpublish.io)'));
+                    $template->setAttribute('error_message', __('The <code>access_token</code> you provided seems to be invalid. The SocialPublish plugin needs at least PHP 5.2 to run. If this does not cause the issue, please leave a feedback message on your SocialPublish dashboard (website: socialpublish.io)'));
+                } catch (SocialpublishPHPVersionException $exception) {
+                    $template->setAttribute('error_message', __('The SocialPublish Plugin tried to call a non-existing function name. The plugin needs at least PHP version 5.2 to run.'));
                 }
             }
         }

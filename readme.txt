@@ -16,6 +16,8 @@ SocialPublish is an easy to use service that automatically shares your blog post
 
 = How to set up =
 
+First of all, the SocialPublish WordPress plugin needs at least PHP 5.2 to run. Make sure your server has the right PHP version.
+
 Create a SocialPublish account:
 
 1. Go to <http://socialpublish.io> and Sign Up for Free! (see: [screenshot 2](http://wordpress.org/extend/plugins/socialpublish/screenshots/))
