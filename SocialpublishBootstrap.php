@@ -36,6 +36,7 @@ class SocialpublishBootstrap
 
 
     function on_admin_notices() {
+        // refactor to template?
         echo "<div class='updated fade'><p><strong>".__('Socialpublish is almost ready.', 'socialpublish')."</strong> ".sprintf(__('You must <a href="%1$s">enter your Socialpublish access_token</a> for it to work.', 'socialpublish'), "options-general.php?page=socialpublish-key-config")."</p></div>";
     }
 

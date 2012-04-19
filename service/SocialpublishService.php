@@ -52,7 +52,7 @@ class SocialpublishService
 
     public function validate($accessToken) {
 
-        if (!preg_match('/^[A-Za-z0-9]+$/', $accessToken)) {
+        if (!preg_match('/^[A-Za-z0-9]+$/', trim($accessToken))) {
             throw new SocialpublishInvalidAccessTokenException();
         }
 
@@ -165,7 +165,7 @@ class SocialpublishService
         }
 
         $context = stream_context_create($cparams);
-        $fp = @fopen(self::$URI . $query, 'rb', false, $context);
+        $fp = fopen(self::$URI . $query, 'rb', false, $context);
         if (!$fp) {
             $res = false;
         } else {
