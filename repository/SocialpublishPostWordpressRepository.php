@@ -60,7 +60,6 @@ class SocialpublishPostWordpressRepository implements ISocialpublishPostReposito
             $hubs[] = array('type' => $hub->getType(), 'name' => $hub->getName());
         }
 
-
         $o = array(
             'title' => $post->getTitle(),
             'link' => $post->getLink(),

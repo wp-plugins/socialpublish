@@ -1,6 +1,6 @@
 <?php if ($account === null) { ?>
 <div>
-    <p><?php echo __('It seems you have not setup your Socialpublish <code>access_token</code> yet.') . ' ' . sprintf(__('You must <a href="%1$s">enter your Socialpublish access_token</a> for it to work.', 'socialpublish'), "options-general.php?page=socialpublish-key-config") ?></p>
+    <p><?php echo __('It seems you have not setup your SocialPublish <code>access_token</code> yet.') . ' ' . sprintf(__('You must <a href="%1$s">enter your SocialPublish access_token</a> for it to work.', 'socialpublish'), "options-general.php?page=socialpublish-key-config") ?></p>
 </div>
 <?php } else { ?>
 <p>Your blog post will be distributed to the social media accounts you select below when the post is published the first time.</p>

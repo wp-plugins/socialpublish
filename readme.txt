@@ -5,7 +5,7 @@ Tags: socialpublish, publish, post, twitter, facebook, social, media, platform
 Author URI: http://socialpublish.io/
 Plugin URI: http://wordpress.org/extend/plugins/socialpublish/
 Requires at least: 2.5
-Tested up to: 3.3.1
+Tested up to: 3.3.2
 Stable tag: 0.0.1
 
 SocialPublish is an easy to use service that automatically shares your blog post on Facebook and Twitter at the moment you publish it.

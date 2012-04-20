@@ -31,13 +31,21 @@ class SocialpublishBootstrap
             if (!$this->service->hasAccount()) {
                 add_action('admin_notices', array($this, 'on_admin_notices'));
             }
+
+            if (!SocialpublishHTTP::getInstance()->hasStrategy()) {
+                add_action('admin_notices', array($this, 'on_no_http_strategy_admin_notices'));
+            }
         }
     }
 
-
     function on_admin_notices() {
         // refactor to template?
-        echo "<div class='updated fade'><p><strong>".__('Socialpublish is almost ready.', 'socialpublish')."</strong> ".sprintf(__('You must <a href="%1$s">enter your Socialpublish access_token</a> for it to work.', 'socialpublish'), "options-general.php?page=socialpublish-key-config")."</p></div>";
+        echo "<div class='updated fade'><p><strong>".__('SocialPublish is almost ready.', 'socialpublish')."</strong> ".sprintf(__('You must <a href="%1$s">enter your Socialpublish access_token</a> for it to work.', 'socialpublish'), "options-general.php?page=socialpublish-key-config")."</p></div>";
+    }
+
+    function on_no_http_strategy_admin_notices() {
+        // refactor to template?
+        echo "<div class='updated fade'><p>".__('SocialPublish can not be used on your server configuration. Error: no_http_strategy_available', 'socialpublish')."</p></div>";
     }
 
     public function on_initialize() {
@@ -170,9 +178,7 @@ class SocialpublishBootstrap
 
                     $template->setAttribute('success_message', $message);
                 } catch (SocialpublishInvalidAccessTokenException $exception) {
-                    $template->setAttribute('error_message', __('The <code>access_token</code> you provided seems to be invalid. The SocialPublish plugin needs at least PHP 5.2 to run. If this does not cause the issue, please leave a feedback message on your SocialPublish dashboard (website: socialpublish.io)'));
-                } catch (SocialpublishPHPVersionException $exception) {
-                    $template->setAttribute('error_message', __('The SocialPublish Plugin tried to call a non-existing function name. The plugin needs at least PHP version 5.2 to run.'));
+                    $template->setAttribute('error_message', __('The <code>access_token</code> you provided seems to be invalid.'));
                 }
             }
         }
@@ -195,7 +201,7 @@ class SocialpublishBootstrap
     public function on_socialpublish_add_meta_box() {
         add_meta_box(
             'socialpublish_post_fields',
-            __( 'Socialpublish', 'socialpublish'),
+            __( 'SocialPublish', 'socialpublish'),
             array($this, 'on_socialpublish_add_meta_box_renderer'),
             'post'
         );

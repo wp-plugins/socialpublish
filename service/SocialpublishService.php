@@ -3,8 +3,6 @@
 require_once __SOCIALPUBLISH_ROOT__ . '/domain/SocialpublishInvalidAccessTokenException.php';
 require_once __SOCIALPUBLISH_ROOT__ . '/domain/SocialpublishAccountHub.php';
 
-require_once __SOCIALPUBLISH_ROOT__ . '/domain/SocialpublishPHPVersionException.php';
-
 // This service layer mediates between the MVC layer and the Data Store layer (Repositories)
 
 class SocialpublishService
@@ -56,7 +54,8 @@ class SocialpublishService
             throw new SocialpublishInvalidAccessTokenException();
         }
 
-        $result = $this->api('/hubs', 'GET', $accessToken);
+        $result = SocialpublishHTTP::getInstance()->get(self::$URI . '/hubs', array('access_token' => $accessToken));
+        $result = json_decode($result, true);
 
         if ($result['success'] !== true) {
             throw new SocialpublishInvalidAccessTokenException();
@@ -96,21 +95,23 @@ class SocialpublishService
                 $hubs[] = $hub->getKey();
             }
 
-            $ret = $this->api(
-            	'/publish',
-            	'POST',
-                self::$accountRepository->getAccount()->getAccessToken(),
-                $a = array(
-            		'title' => $post->getTitle(),
-                    'message' => $post->getMessage(),
-            		'link' => $post->getLink(),
-                    'link_description' => $post->getLinkDescription(),
-                    'hashtags' => $post->getHashTags(),
-                    'hubs' => $hubs
+            $ret = SocialpublishHTTP::getInstance()->post(
+                self::$URI . '/publish',
+                array(
+                    'access_token' => self::$accountRepository->getAccount()->getAccessToken(),
+                    'body' => json_encode(
+                        array(
+            				'title' => $post->getTitle(),
+                    		'message' => $post->getMessage(),
+            				'link' => $post->getLink(),
+                    		'link_description' => $post->getLinkDescription(),
+                    		'hashtags' => $post->getHashTags(),
+                    		'hubs' => $hubs
+                        )
+                    )
                 )
             );
-
-            return $ret;
+            return json_decode($ret, true);
         } else {
             return null;
         }
@@ -134,49 +135,6 @@ class SocialpublishService
 
     public function savePost(SocialpublishPost $post) {
         self::$postRepository->save($post);
-    }
-
-    protected function api($query, $method, $accessToken, $body = null) {
-        $cparams = array(
-            'http' => array(
-                'method' => $method,
-                'ignore_errors' => true
-            )
-        );
-
-        if (!function_exists('json_encode')) {
-            throw new SocialpublishPHPVersionException();
-        }
-
-        $params = array(
-            "access_token" => $accessToken
-        );
-
-        if ($body !== null) {
-            $params['body'] = json_encode($body);
-        }
-
-        $params = http_build_query($params);
-
-        if ($method === 'POST') {
-            $cparams['http']['content'] = $params;
-        } else {
-            $query .= '?' . $params;
-        }
-
-        $context = stream_context_create($cparams);
-        $fp = fopen(self::$URI . $query, 'rb', false, $context);
-        if (!$fp) {
-            $res = false;
-        } else {
-            $res = stream_get_contents($fp);
-        }
-
-        if ($res === false) {
-            return false;
-        }
-
-        return json_decode($res, true);
     }
 }
 
