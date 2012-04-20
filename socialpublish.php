@@ -13,7 +13,7 @@ Author: Socialpublish.io <Jorgen Horstink>
 Author URI: http://socialpublish.io
 */
 
-define('DEV', true);
+define('DEV', false);
 
 if (DEV) {
     define('SOCIALPUBLISH_URI', 'http://dev.socialpublish.io:8080');
