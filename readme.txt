@@ -53,7 +53,7 @@ That's all! You're ready to go now! If the `access_token` is valid, you'll see a
 == Changelog ==
 
 = 1.0.1 =
-* Minor bug fixes
+* Minor bug fixes 
 
 = 1.0.0 =
 * Fixed a bug caused by allow_url_fopen = false on some configuration. If you've had problems with an invalid access_token, this will probably fix it!
