@@ -8,7 +8,7 @@
 Plugin Name: Socialpublish
 Plugin URI: http://socialpublish.io/plugins/wordpress
 Description: SocialPublish is an easy to use service that automatically shares your blog post on Facebook and Twitter at the moment you publish it!
-Version: 1.0.1
+Version: 1.0.2
 Author: Socialpublish.io <Jorgen Horstink>
 Author URI: http://socialpublish.io
 */

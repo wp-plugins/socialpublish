@@ -6,7 +6,7 @@ Author URI: http://socialpublish.io/
 Plugin URI: http://wordpress.org/extend/plugins/socialpublish/
 Requires at least: 2.5
 Tested up to: 3.3.2
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 
 SocialPublish is an easy to use service that automatically shares your blog post on Facebook and Twitter at the moment you publish it.
 
@@ -51,6 +51,9 @@ That's all! You're ready to go now! If the `access_token` is valid, you'll see a
 6. Screenshot 6 - If the `access_token` is valid, you'll see an overview of the social media accounts you have connected to your SocialPublish account earlier.
 
 == Changelog ==
+
+= 1.0.2 =
+* Increased the fsockopen time out to 10 seconds, to prevent early time outs 
 
 = 1.0.1 =
 * Minor bug fixes 
