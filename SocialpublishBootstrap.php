@@ -23,6 +23,8 @@ class SocialpublishBootstrap
         // if the user has the right to do so... If not this is a security issue that needs
         // to be resolved.
         add_action('init', array($this, 'on_initialize'));
+        add_action('activate_socialpublish/socialpublish.php', array($this, 'on_activate'));
+        add_action('deactivate_socialpublish/socialpublish.php', array($this, 'on_deactivate'));
 
         if (is_admin()) {
             // at least these actions should only appear with administrator rights
@@ -36,6 +38,22 @@ class SocialpublishBootstrap
                 add_action('admin_notices', array($this, 'on_no_http_strategy_admin_notices'));
             }
         }
+    }
+
+    function on_activate() {
+        global $wpdb;
+
+        $wpdb->query($wpdb->prepare("DELETE FROM " . $wpdb->postmeta . " WHERE meta_key = 'socialpublish'"));
+        $wpdb->query($wpdb->prepare("DELETE FROM " . $wpdb->options . " WHERE option_name = 'socialpublish_access_token'"));
+        $wpdb->query($wpdb->prepare("DELETE FROM " . $wpdb->options . " WHERE option_name = 'socialpublish_hubs'"));
+    }
+
+    function on_deactivate() {
+        global $wpdb;
+
+        $wpdb->query($wpdb->prepare("DELETE FROM " . $wpdb->postmeta . " WHERE meta_key = 'socialpublish'"));
+        $wpdb->query($wpdb->prepare("DELETE FROM " . $wpdb->options . " WHERE option_name = 'socialpublish_access_token'"));
+        $wpdb->query($wpdb->prepare("DELETE FROM " . $wpdb->options . " WHERE option_name = 'socialpublish_hubs'"));
     }
 
     function on_admin_notices() {
@@ -178,7 +196,7 @@ class SocialpublishBootstrap
 
                     $template->setAttribute('success_message', $message);
                 } catch (SocialpublishInvalidAccessTokenException $exception) {
-                    $template->setAttribute('error_message', __('The <code>access_token</code> you provided seems to be invalid.'));
+                    $template->setAttribute('error_message', __('There seems to be a problem with your <code>access_token</code>: "' . $exception->getMessage() . '"'));
                 }
             }
         }

@@ -32,7 +32,7 @@ class SocialpublishAccountWordpressRepository implements ISocialpublishAccountRe
                 $o = json_decode(get_option('socialpublish_hubs'), true);
                 $hubs = array();
                 foreach ($o as $row) {
-                    $hubs[] = new SocialpublishAccountHub($row['type'], $row['name']);
+                    $hubs[] = new SocialpublishAccountHub($row['type'], $row['id'], $row['name']);
                 }
 
                 $account->setHubs($hubs);
@@ -56,7 +56,7 @@ class SocialpublishAccountWordpressRepository implements ISocialpublishAccountRe
         // make the Domain object serializable as JSON
         $hubs = array();
         foreach ($account->getHubs() as $hub) {
-            $hubs[] = array('type' => $hub->getType(), 'name' => $hub->getName());
+            $hubs[] = array('type' => $hub->getType(), 'id' => $hub->getId() . "", 'name' => $hub->getName());
         }
 
         update_option('socialpublish_hubs', json_encode($hubs));
