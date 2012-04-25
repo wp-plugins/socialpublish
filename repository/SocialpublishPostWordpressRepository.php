@@ -45,7 +45,7 @@ class SocialpublishPostWordpressRepository implements ISocialpublishPostReposito
 
             $hubs = array();
             foreach ($json['hubs'] as $hub) {
-                $hubs[] = new SocialpublishAccountHub($hub['type'], $hub['name']);
+                $hubs[] = new SocialpublishAccountHub($hub['type'], $hub['id'], $hub['name']);
             }
 
             $ret->setHubs($hubs);
@@ -57,7 +57,7 @@ class SocialpublishPostWordpressRepository implements ISocialpublishPostReposito
     public function save(SocialpublishPost $post) {
         $hubs = array();
         foreach ($post->getHubs() as $hub) {
-            $hubs[] = array('type' => $hub->getType(), 'name' => $hub->getName());
+            $hubs[] = array('type' => $hub->getType(), 'id' => $hub->getId(), 'name' => $hub->getName());
         }
 
         $o = array(
