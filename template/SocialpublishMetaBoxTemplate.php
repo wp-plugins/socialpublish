@@ -3,7 +3,7 @@
     <p><?php echo __('It seems you have not setup your SocialPublish <code>access_token</code> yet.') . ' ' . sprintf(__('You must <a href="%1$s">enter your SocialPublish access_token</a> for it to work.', 'socialpublish'), "options-general.php?page=socialpublish-key-config") ?></p>
 </div>
 <?php } else { ?>
-<p>Your blog post will be distributed to the social media accounts you select below when the post is published the first time.</p>
+<p>Your blog post will be shared on the social media accounts you select below when the post is published the first time.</p>
 <p>
     Hashtags <span style="font-size: .8em">(optional)</span>: <input type="text" name="socialpublish_hashtags" class="newtag form-input-tip" size="16" autocomplete="off" value="<?php echo $post->getHashTags(); ?>"> hashtags will be appended to your message when published to Twitter
 </p>

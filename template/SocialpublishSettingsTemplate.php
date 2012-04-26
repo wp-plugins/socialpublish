@@ -1,6 +1,6 @@
     <div class="wrap">
         <div id="icon-options-general" class="icon32"><br></div>
-        <h2><?php _e('Socialpublish Settings', 'socialpublish'); ?></h2>
+        <h2><?php _e('SocialPublish Settings', 'socialpublish'); ?></h2>
         <?php if (isset($error_message)) { ?>
         <div class="error">
             <p><?php echo $error_message; ?></p>
@@ -35,14 +35,14 @@
         <?php if ($account !== null) { ?>
         <h3>Connected social media accounts</h3>
         <?php if (sizeof($account->getHubs()) === 0) { ?>
-        <p>It seems you have not connected any social media account to your socialpublish account. Please take the following three steps:</p>
+        <p>It seems you have not connected any social media account to your SocialPublish account. Please take the following three steps:</p>
         <ol>
             <li><?php printf(__('go to <a href="%s">socialpublish.io</a>'), SOCIALPUBLISH_URI); ?></li>
-            <li>connect the social media accounts you want to distribute your posts to
+            <li>connect the social media accounts you want to distribute your posts to and make sure at least one social media account is enabled
             <li>come back, and reload your <code>access_token</code></li>
         </ol>
         <?php } else { ?>
-        <p><?php printf(__('The following social media accounts are connected to your Socialpublish account. To add or delete accounts, please <a href="%s">visit the Socialpublish website</a>.'), SOCIALPUBLISH_URI); ?></p>
+        <p><?php printf(__('The following social media accounts are connected to your SocialPublish account. To add or delete accounts, please <a href="%s">visit the SocialPublish website</a>.'), SOCIALPUBLISH_URI); ?></p>
         <table class="wp-list-table widefat plugins" cellspacing="0">
             <thead>
                 <tr>

@@ -6,7 +6,7 @@ Author URI: http://socialpublish.io/
 Plugin URI: http://wordpress.org/extend/plugins/socialpublish/
 Requires at least: 2.5
 Tested up to: 3.3.2
-Stable tag: 0.0.1
+Stable tag: 1.1.1
 
 SocialPublish is an easy to use service that automatically shares your blog post on Facebook and Twitter at the moment you publish it.
 
@@ -15,8 +15,6 @@ SocialPublish is an easy to use service that automatically shares your blog post
 SocialPublish is an easy to use service that automatically shares your blog post on Facebook and Twitter at the moment you publish it. While other plugins rely on RSS feeds and usually have 30 minute delays, SocialPublish immediately shares your blog post. Because SocialPublish is a service, you can easily set up an account and connect your social media accounts. You don't have to do the hard process of registering Facebook and Twitter applications.
 
 = How to set up =
-
-First of all, the SocialPublish WordPress plugin needs at least PHP 5.2 to run. Make sure your server has the right PHP version.
 
 Create a SocialPublish account:
 
@@ -51,6 +49,23 @@ That's all! You're ready to go now! If the `access_token` is valid, you'll see a
 6. Screenshot 6 - If the `access_token` is valid, you'll see an overview of the social media accounts you have connected to your SocialPublish account earlier.
 
 == Changelog ==
+
+= 1.1.1 =
+* Minor backwards compatibility fixes on editing an old post
+* Prevent PHP warning if fsockopen cannot connect to the server
+
+= 1.1 =
+* Made important changes to the SocialPublish API (current version = 0.2).
+* The release also includes a fix for the Facebook Page problem.
+
+= 1.0.2 =
+* Increased the fsockopen time out to 10 seconds, to prevent early time outs 
+
+= 1.0.1 =
+* Minor bug fixes 
+
+= 1.0.0 =
+* Fixed a bug caused by allow_url_fopen = false on some configuration. If you've had problems with an invalid access_token, this will probably fix it!
 
 = 0.0.1 =
 * The first test release.

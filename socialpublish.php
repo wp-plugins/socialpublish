@@ -8,20 +8,24 @@
 Plugin Name: Socialpublish
 Plugin URI: http://socialpublish.io/plugins/wordpress
 Description: SocialPublish is an easy to use service that automatically shares your blog post on Facebook and Twitter at the moment you publish it!
-Version: 0.0.1
+Version: 1.1.1
 Author: Socialpublish.io <Jorgen Horstink>
 Author URI: http://socialpublish.io
 */
 
-define('DEV', true);
+define('DEV', false);
+
+define ('SOCIALPUBLISH_PLUGIN_VERSION', '1.1.1');
+define ('SOCIALPUBLISH_API_VERSION', '0.2');
 
 if (DEV) {
     define('SOCIALPUBLISH_URI', 'http://dev.socialpublish.io:8080');
+    define('__SOCIALPUBLISH_FILE__', 'socialpublish/socialpublish.php');
 } else {
     define('SOCIALPUBLISH_URI', 'http://socialpublish.io');
+    define('__SOCIALPUBLISH_FILE__', __FILE__);
 }
 
-define('__SOCIALPUBLISH_FILE__', __FILE__);
 define('__SOCIALPUBLISH_ROOT__', dirname(__FILE__));
 
 require_once __SOCIALPUBLISH_ROOT__ . '/service/SocialpublishService.php';
@@ -65,7 +69,7 @@ SocialpublishPostWordpressRepository::setAccountRepository(SocialpublishAccountW
 
 SocialpublishService::setAccountRepository(SocialpublishAccountWordpressRepository::getInstance());
 SocialpublishService::setPostRepository(SocialpublishPostWordpressRepository::getInstance());
-SocialpublishService::setBaseUri(SOCIALPUBLISH_URI . '/api/0.1');
+SocialpublishService::setBaseUri(SOCIALPUBLISH_URI . '/api/' . SOCIALPUBLISH_API_VERSION);
 
 // Load the plugin \o/, some sort of closure...
 SocialpublishBootstrap::loadPlugin(SocialpublishService::getInstance());

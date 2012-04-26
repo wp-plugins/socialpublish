@@ -58,14 +58,14 @@ class SocialpublishService
         $result = json_decode($result, true);
 
         if ($result['success'] !== true) {
-            throw new SocialpublishInvalidAccessTokenException();
+            throw new SocialpublishInvalidAccessTokenException($result['message']);
         }
 
         $account = self::$accountRepository->getAccount($accessToken);
 
         $hubs = array();
         foreach ($result['hubs'] as $row) {
-            $hubs[] = new SocialpublishAccountHub($row['type'], $row['name']);
+            $hubs[] = new SocialpublishAccountHub($row['type'], $row['id'], $row['name']);
         }
 
         $account->setHubs($hubs);

@@ -59,7 +59,13 @@ class SocialpublishHTTPSocketStrategy extends ASocialpublishHTTPStrategy
             $req .= $crlf;
         }
 
-        $fp = fsockopen($c['host'], $c['port'], $errno, $errstr, 0.1);
+        if (!isset($c['port']) || $c['port'] == 0) {
+            $port = 80;
+        } else {
+            $port = $c['port'];
+        }
+
+        $fp = @fsockopen($c['host'], $port, $errno, $errstr, 10);
 
         if ($fp === false) {
             throw new SocialpublishHTTPException();
