@@ -27,6 +27,14 @@ class SocialpublishPostWordpressRepository implements ISocialpublishPostReposito
         self::$accountRepository = $accountRepository;
     }
 
+    protected function isCompatiblePost($json) {
+        return $json !== null && isset($json['published']) && isset($json['hashtags']) && isset($json['hubs']) && is_array($json['hubs']);
+    }
+
+    protected function isCompatibleHub($json) {
+        return isset($json['type']) && isset($json['id']) && isset($json['name']);
+    }
+
 
     public function getPostById($postId) {
         $post = get_post($postId);
@@ -38,17 +46,24 @@ class SocialpublishPostWordpressRepository implements ISocialpublishPostReposito
         if ($meta !== false && $meta !== '') {
             $json = json_decode($meta, true);
 
-            $ret->setIsPublished($json['published']);
+            if ($this->isCompatiblePost($json)) {
+                $ret->setIsPublished($json['published']);
 
-            $ret->setMessage($json['message']);
-            $ret->setHashTags($json['hashtags']);
+                $ret->setMessage($json['message']);
+                $ret->setHashTags($json['hashtags']);
 
-            $hubs = array();
-            foreach ($json['hubs'] as $hub) {
-                $hubs[] = new SocialpublishAccountHub($hub['type'], $hub['id'], $hub['name']);
+                $hubs = array();
+                foreach ($json['hubs'] as $hub) {
+                    if ($this->isCompatibleHub($hub)) {
+                        $hubs[] = new SocialpublishAccountHub($hub['type'], $hub['id'], $hub['name']);
+                    }
+                }
+
+                $ret->setHubs($hubs);
+            } else {
+                // incompatible contents...
+                delete_post_meta($postId, 'socialpublish');
             }
-
-            $ret->setHubs($hubs);
         }
 
         return $ret;

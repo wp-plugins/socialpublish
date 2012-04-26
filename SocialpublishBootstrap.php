@@ -23,8 +23,6 @@ class SocialpublishBootstrap
         // if the user has the right to do so... If not this is a security issue that needs
         // to be resolved.
         add_action('init', array($this, 'on_initialize'));
-        add_action('activate_socialpublish/socialpublish.php', array($this, 'on_activate'));
-        add_action('deactivate_socialpublish/socialpublish.php', array($this, 'on_deactivate'));
 
         if (is_admin()) {
             // at least these actions should only appear with administrator rights
@@ -40,25 +38,9 @@ class SocialpublishBootstrap
         }
     }
 
-    function on_activate() {
-        global $wpdb;
-
-        $wpdb->query($wpdb->prepare("DELETE FROM " . $wpdb->postmeta . " WHERE meta_key = 'socialpublish'"));
-        $wpdb->query($wpdb->prepare("DELETE FROM " . $wpdb->options . " WHERE option_name = 'socialpublish_access_token'"));
-        $wpdb->query($wpdb->prepare("DELETE FROM " . $wpdb->options . " WHERE option_name = 'socialpublish_hubs'"));
-    }
-
-    function on_deactivate() {
-        global $wpdb;
-
-        $wpdb->query($wpdb->prepare("DELETE FROM " . $wpdb->postmeta . " WHERE meta_key = 'socialpublish'"));
-        $wpdb->query($wpdb->prepare("DELETE FROM " . $wpdb->options . " WHERE option_name = 'socialpublish_access_token'"));
-        $wpdb->query($wpdb->prepare("DELETE FROM " . $wpdb->options . " WHERE option_name = 'socialpublish_hubs'"));
-    }
-
     function on_admin_notices() {
         // refactor to template?
-        echo "<div class='updated fade'><p><strong>".__('SocialPublish is almost ready.', 'socialpublish')."</strong> ".sprintf(__('You must <a href="%1$s">enter your Socialpublish access_token</a> for it to work.', 'socialpublish'), "options-general.php?page=socialpublish-key-config")."</p></div>";
+        echo "<div class='updated fade'><p><strong>".__('SocialPublish is almost ready.', 'socialpublish')."</strong> ".sprintf(__('You must <a href="%1$s">enter your Socialpublish access_token</a> for it to work. You can find your access_token on your Dashboard on the SocialPublish website.', 'socialpublish'), "options-general.php?page=socialpublish-key-config")."</p></div>";
     }
 
     function on_no_http_strategy_admin_notices() {
@@ -88,7 +70,8 @@ class SocialpublishBootstrap
         add_action('save_post', array($this, 'on_save_post'), 10, 2 );
         add_action('socialpublish_save_post', array($this, 'on_socialpublish_save_post'), 10, 2);
 
-        register_deactivation_hook(__SOCIALPUBLISH_FILE__, array($this, 'on_socialpublish_deactivate'));
+        register_deactivation_hook(__SOCIALPUBLISH_FILE__, array($this, 'on_socialpublish_cleanup'));
+        register_activation_hook  (__SOCIALPUBLISH_FILE__, array($this, 'on_socialpublish_cleanup'));
     }
 
     /*
@@ -127,10 +110,10 @@ class SocialpublishBootstrap
         $this->service->publish($postId);
     }
 
-    public function on_socialpublish_deactivate() {
+    public function on_socialpublish_cleanup() {
         // Why? WHY? WHYYYYYY? :'(
-        // Okey, the admin decided this plugin sucks and wants to delete it,
-        // so ask the service layer to remove the account; clean up the mess
+        // Okey, the admin decided this plugin sucks and wants to deactivate it,
+        // so ask the service layer to remove the account; clean up the mess...
         $this->service->deleteAccount();
     }
 
@@ -141,8 +124,8 @@ class SocialpublishBootstrap
     	if (function_exists('add_submenu_page')) { // unknown when introduced?
     	    add_submenu_page(
     	    	'options-general.php',
-    	        __('Socialpublish Configuration', 'socialpublish'),
-    	        __('Socialpublish', 'socialpublish'),
+    	        __('SocialPublish Configuration', 'socialpublish'),
+    	        __('SocialPublish', 'socialpublish'),
     	        'manage_options',
     	        'socialpublish-key-config',
     	        array($this, 'on_add_submenu_page')
@@ -189,14 +172,16 @@ class SocialpublishBootstrap
                     $hasHubs = sizeof($account->getHubs()) > 0;
 
                     if ($hasHubs === true) {
-                        $message = __('Hooraa, your <code>access_token</code> is valid, happy blogging!');
+                        $message = __('Hooraa, your <code>access_token</code> is valid, happy blogging! Don\'t forget to enable the SocialPublish screen option when you create a new Post (upper right corner of the page where you edit/add a Post).');
                     } else {
-                        $message = __('Although your <code>access_token</code> is valid, you have no social media accounts connected to your Socialpublish account yet. Please read the instructions below carefully!');
+                        $message = __('Although your <code>access_token</code> is valid, you have no social media accounts connected to your SocialPublish account yet. Please read the instructions below carefully!');
                     }
 
                     $template->setAttribute('success_message', $message);
                 } catch (SocialpublishInvalidAccessTokenException $exception) {
                     $template->setAttribute('error_message', __('There seems to be a problem with your <code>access_token</code>: "' . $exception->getMessage() . '"'));
+                } catch (SocialpublishHTTPException $exception) {
+                    $template->setAttribute('error_message', __('There seems to be a problem connecting to the SocialPublish server. Please try again later.'));
                 }
             }
         }
